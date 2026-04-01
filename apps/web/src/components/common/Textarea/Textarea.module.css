@@ -1,0 +1,100 @@
+.primary {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 1rem;
+}
+
+.primary textarea {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-weight: 400;
+  background-color: #fff;
+  border: 1px solid #5c5c5c;
+  border-radius: 0.3rem;
+  color: #0c0c0c;
+  resize: vertical;
+}
+
+.primary textarea:focus {
+  border: 1px solid #0070f3;
+  outline: 0;
+}
+
+.primary textarea:disabled {
+  color: #5c5c5c;
+  background-color: #fff;
+}
+
+.primary textarea::placeholder {
+  color: #5c5c5c;
+}
+
+.primary textarea:disabled::placeholder {
+  color: #5c5c5c;
+}
+
+.primary span {
+  flex-shrink: 0;
+}
+
+.error {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 1rem;
+}
+
+.error textarea {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-weight: 400;
+  background-color: #fff;
+  border: 1px solid #b42c01;
+  border-radius: 0.3rem;
+  color: #0c0c0c;
+  resize: vertical;
+}
+
+.error textarea:focus {
+  border: 1px solid #b42c01;
+  outline: 0;
+}
+
+.error textarea:disabled {
+  color: #5c5c5c;
+  background-color: #fff;
+}
+
+.error textarea::placeholder {
+  color: #5c5c5c;
+}
+
+.error textarea:disabled::placeholder {
+  color: #5c5c5c;
+}
+
+.error span {
+  flex-shrink: 0;
+}
+
+.description {
+  margin-top: 0.125rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #5c5c5c;
+  white-space: pre-wrap;
+}
+
+.full-width {
+  width: 100%;
+  max-width: initial;
+}

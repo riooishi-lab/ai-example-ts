@@ -1,0 +1,11 @@
+.separator-vertical {
+  width: 0.5px;
+  height: 100%;
+  background-color: #fff;
+}
+
+.separator-horizontal {
+  width: 100%;
+  height: 0.5px;
+  background-color: #fff;
+}

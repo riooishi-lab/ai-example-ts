@@ -1,0 +1,71 @@
+/* Radix UI Slider Styles */
+.sliderRoot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  touch-action: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+.sliderTrack {
+  background-color: gray;
+  position: relative;
+  flex-grow: 1;
+  border-radius: 2rem;
+  height: 1rem;
+}
+
+.sliderRange {
+  position: absolute;
+  background-color: #ff6b9d;
+  border-radius: 2rem;
+  height: 100%;
+}
+
+.sliderThumb {
+  position: relative;
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #ff6b9d;
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(255, 107, 157, 0.8);
+  transform: translateX(-50%);
+}
+
+.verticalLine {
+  position: absolute;
+  cursor: col-resize;
+  z-index: 1;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 100rem;
+  border-left: 0.15rem dashed rgba(255, 107, 157, 0.8);
+  transform: translateX(-50%);
+}
+
+.sliderThumb:hover {
+  z-index: 1;
+  transform: scale(1.2) translateX(-40%);
+  box-shadow: 0 0 8px rgba(255, 107, 157, 1);
+}
+
+.sliderThumb:focus {
+  z-index: 1;
+  outline: none;
+  transform: scale(1.3) translateX(-40%);
+  box-shadow: 0 0 10px rgba(255, 107, 157, 1);
+}
+
+.sliderThumb:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sliderRoot:disabled {
+  cursor: not-allowed;
+}

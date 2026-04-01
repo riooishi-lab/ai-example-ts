@@ -1,0 +1,12 @@
+.label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  gap: 0.25rem;
+}
+
+.container {
+  display: flex;
+  font-weight: bold;
+  gap: 0.5rem;
+}

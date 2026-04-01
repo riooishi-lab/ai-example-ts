@@ -1,0 +1,174 @@
+.container {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.gridPattern {
+  position: absolute;
+  top: 0%;
+  bottom: 50%;
+  left: 25%;
+  right: 25%;
+  pointer-events: none;
+  opacity: 0.2;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      #e5e7eb 0,
+      #e5e7eb 1px,
+      transparent 1px,
+      transparent 40px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      #e5e7eb 0,
+      #e5e7eb 0.5px,
+      transparent 1px,
+      transparent 40px
+    );
+  mask-image: radial-gradient(
+    ellipse 80% 50% at center,
+    black 60%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 50% at center,
+    black 60%,
+    transparent 100%
+  );
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  border-radius: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.titleBlue {
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #3959cc;
+}
+
+.subtitle {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #6b7280;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.errorPage {
+  text-align: center;
+}
+
+.errorTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #dc2626;
+}
+
+.errorMessage {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.signInLink {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #2563eb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.googleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 2rem;
+}
+
+.googleButton:hover {
+  background: #f3f4f6;
+}
+
+/* Custom styles for common components */
+.inputField input {
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: var(--background);
+  color: var(--foreground);
+  height: 48px;
+}
+
+.inputField input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.inputField input:disabled {
+  background: #f3f4f6;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.inputField label {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.submitButton {
+  background: #3959cc;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 24px;
+}
+
+.submitButton:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.submitButton:disabled {
+  background: #93c5fd;
+}
+
+.googleButton:hover:not(:disabled) {
+  background: #f3f4f6;
+}

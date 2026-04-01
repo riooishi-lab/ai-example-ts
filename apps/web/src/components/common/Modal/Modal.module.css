@@ -1,0 +1,133 @@
+.root {
+  position: relative;
+  z-index: 1000; /* Replace SCSS z-index variable */
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999; /* Replace SCSS z-index variable */
+  background-color: rgba(0, 0, 0, 0.6);
+  animation: overlay-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
+  background-color: #fff;
+  border-radius: 0.5rem;
+  transform: translate(-50%, -50%);
+  animation: content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  color: #000;
+}
+
+.modal:focus {
+  outline: none;
+}
+
+.content-style {
+  position: relative;
+  flex-shrink: 1;
+  width: 100%;
+  height: fit-content;
+  overflow: auto;
+}
+
+.small {
+  width: 25rem;
+}
+
+.medium {
+  width: 40rem;
+}
+
+.large {
+  width: 55rem;
+}
+
+.full {
+  width: calc(100vw - 2rem);
+}
+
+.close-icon {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #000;
+}
+
+.title {
+  margin: 0.25rem 0 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Padding classes */
+.padding--xs {
+  padding: 0.25rem;
+}
+
+.padding--s {
+  padding: 0.75rem;
+}
+
+.padding--m {
+  padding: 1rem;
+}
+
+.padding--l {
+  padding: 1.5rem;
+}
+
+.padding--xl {
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    max-height: 100vh;
+  }
+}
+@media (max-width: 640px) {
+  .title {
+    overflow: visible;
+  }
+  .modal {
+    max-height: 90vh;
+  }
+}
+
+@keyframes overlay-show {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes content-show {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

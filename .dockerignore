@@ -1,0 +1,12 @@
+**/node_modules
+**/dist
+**/.next
+**/build
+**/out
+**/Dockerfile*
+**/.dockerignore
+**/.gitignore
+**/infrastructure
+**/.husky
+**/.git
+**/generated

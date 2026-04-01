@@ -1,0 +1,92 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": false
+  },
+  "files": {
+    "includes": [
+      "**",
+      "!node_modules",
+      "!src/generated",
+      "!.next",
+      "!test-results",
+      "!playwright-report"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space"
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "a11y": {
+        "useKeyWithClickEvents": "info",
+        "noLabelWithoutControl": "info",
+        "useAltText": "info"
+      },
+      "style": {
+        "useTemplate": "error",
+        "useImportType": "error",
+        "noNonNullAssertion": "error",
+        "noUselessElse": "error",
+        "noProcessEnv": "error",
+        "noNestedTernary": "error"
+      },
+      "performance": {
+        "noAccumulatingSpread": "off"
+      },
+      "complexity": {
+        "useOptionalChain": "error",
+        "useFlatMap": {
+          "level": "error",
+          "fix": "unsafe"
+        },
+        "noForEach": "off",
+        "noUselessFragments": {
+          "fix": "safe",
+          "level": "error"
+        },
+        "useLiteralKeys": {
+          "fix": "safe",
+          "level": "error"
+        }
+      },
+      "suspicious": {
+        "noExplicitAny": "error",
+        "noImplicitAnyLet": "error",
+        "noArrayIndexKey": "warn",
+        "noSuspiciousSemicolonInJsx": "error",
+        "noConsole": {
+          "level": "error",
+          "options": {
+            "allow": ["warn", "error"]
+          }
+        }
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "warn",
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "lineWidth": 120,
+      "quoteStyle": "single",
+      "semicolons": "asNeeded",
+      "jsxQuoteStyle": "single"
+    }
+  }
+}

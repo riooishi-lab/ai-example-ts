@@ -1,0 +1,14 @@
+.pageButton {
+  padding: 0.5rem 1rem;
+}
+
+.pageButtonActive {
+  background-color: var(--foreground);
+  color: var(--background);
+  padding: 0.5rem 1rem;
+}
+
+.pageButtonActive:hover:not(:disabled) {
+  background-color: var(--foreground);
+  color: var(--background);
+}

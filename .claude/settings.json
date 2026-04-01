@@ -1,0 +1,22 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pnpm --filter web lint:fix 1>&2 || exit 2"
+          },
+          {
+            "type": "command",
+            "command": "pnpm --filter web exec tsc --noEmit 1>&2 || exit 2"
+          },
+          {
+            "type": "command",
+            "command": "say \"$(whoami)\""
+          }
+        ]
+      }
+    ]
+  }
+}

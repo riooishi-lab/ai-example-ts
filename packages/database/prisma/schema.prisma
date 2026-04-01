@@ -1,0 +1,220 @@
+// Prisma Schema for Sample Application
+generator client {
+  provider        = "prisma-client"
+  previewFeatures = ["views"]
+  output          = "../generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================
+// User Management
+// ============================================
+
+model User {
+  id         Int     @id @default(autoincrement()) @map("id")
+  publicId   String  @unique @default(cuid()) @map("public_id")
+  externalId String? @map("external_id")
+
+  // External Authentication Provider
+  authProviderId String @unique @map("auth_provider_id")
+
+  // Profile Information
+  email       String  @unique @map("email")
+  firstName   String  @map("first_name")
+  lastName    String  @map("last_name")
+  displayName String? @map("display_name")
+  avatarUrl   String? @map("avatar_url")
+  phoneNumber String? @map("phone_number")
+
+  // Role and Permissions
+  role UserRole @default(SALES_REP) @map("role")
+
+  // Account Status
+  isActive        Boolean @default(true) @map("is_active")
+  isEmailVerified Boolean @default(false) @map("is_email_verified")
+
+  // Session Management
+  lastSignedInAt DateTime? @map("last_signed_in_at") @db.Timestamptz(6)
+
+  // Timestamps
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+  syncedAt  DateTime? @map("synced_at") @db.Timestamptz(6)
+
+  // Relations
+  invitationsSent Invitation[] @relation("InvitedBy")
+  teamMembers     TeamMember[]
+
+  @@index([publicId])
+  @@index([externalId])
+  @@index([email])
+  @@index([authProviderId])
+  @@index([isActive])
+  @@index([deletedAt])
+  @@map("users")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  MANAGER
+  SALES_REP
+  VIEWER
+}
+
+// ============================================
+// Invitation (招待)
+// ============================================
+
+model Invitation {
+  id       Int    @id @default(autoincrement()) @map("id")
+  publicId String @unique @default(cuid()) @map("public_id")
+  token    String @unique @map("token")
+
+  email       String  @map("email")
+  firstName   String  @map("first_name")
+  lastName    String  @map("last_name")
+  displayName String? @map("display_name")
+
+  role UserRole @default(SALES_REP) @map("role")
+
+  status InvitationStatus @default(PENDING) @map("status")
+
+  invitedById Int  @map("invited_by_id")
+  invitedBy   User @relation("InvitedBy", fields: [invitedById], references: [id])
+
+  expiresAt DateTime @map("expires_at") @db.Timestamptz(6)
+
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  acceptedAt DateTime? @map("accepted_at") @db.Timestamptz(6)
+  deletedAt  DateTime? @map("deleted_at") @db.Timestamptz(6)
+
+  @@index([token])
+  @@index([email])
+  @@index([status])
+  @@index([invitedById])
+  @@index([expiresAt])
+  @@map("invitations")
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  EXPIRED
+  REVOKED
+}
+
+// ============================================
+// Team
+// ============================================
+
+model Team {
+  id       Int    @id @default(autoincrement()) @map("id")
+  publicId String @unique @default(cuid()) @map("public_id")
+
+  name String @map("name")
+
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+
+  teamMembers TeamMember[]
+
+  @@index([publicId])
+  @@index([deletedAt])
+  @@map("teams")
+}
+
+model TeamMember {
+  id Int @id @default(autoincrement()) @map("id")
+
+  teamId Int  @map("team_id")
+  team   Team @relation(fields: [teamId], references: [id])
+
+  userId Int  @map("user_id")
+  user   User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+
+  @@unique([teamId, userId])
+  @@index([teamId])
+  @@index([userId])
+  @@index([deletedAt])
+  @@map("team_members")
+}
+
+// ============================================
+// Database Views
+// ============================================
+
+view VisibleUser {
+  id              Int       @unique
+  publicId        String    @unique @map("public_id")
+  externalId      String?   @map("external_id")
+  authProviderId  String    @unique @map("auth_provider_id")
+  email           String    @unique
+  firstName       String    @map("first_name")
+  lastName        String    @map("last_name")
+  displayName     String?   @map("display_name")
+  avatarUrl       String?   @map("avatar_url")
+  phoneNumber     String?   @map("phone_number")
+  role            UserRole
+  isActive        Boolean   @map("is_active")
+  isEmailVerified Boolean   @map("is_email_verified")
+  lastSignedInAt  DateTime? @map("last_signed_in_at") @db.Timestamptz(6)
+  createdAt       DateTime  @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime  @map("updated_at") @db.Timestamptz(6)
+  deletedAt       DateTime? @map("deleted_at") @db.Timestamptz(6)
+  syncedAt        DateTime? @map("synced_at") @db.Timestamptz(6)
+
+  @@map("visible_users")
+}
+
+view VisibleTeam {
+  id       Int      @unique
+  publicId String   @unique @map("public_id")
+  name     String
+  createdAt DateTime  @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime  @map("updated_at") @db.Timestamptz(6)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+
+  @@map("visible_teams")
+}
+
+view VisibleTeamMember {
+  id     Int @unique
+  teamId Int @map("team_id")
+  userId Int @map("user_id")
+  createdAt DateTime  @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime  @map("updated_at") @db.Timestamptz(6)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+
+  @@map("visible_team_members")
+}
+
+view VisibleInvitation {
+  id          Int              @unique
+  publicId    String           @unique @map("public_id")
+  token       String           @unique
+  email       String
+  firstName   String           @map("first_name")
+  lastName    String           @map("last_name")
+  displayName String?          @map("display_name")
+  role        UserRole
+  status      InvitationStatus
+  invitedById Int              @map("invited_by_id")
+  expiresAt   DateTime         @map("expires_at") @db.Timestamptz(6)
+  createdAt   DateTime         @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime         @map("updated_at") @db.Timestamptz(6)
+  acceptedAt  DateTime?        @map("accepted_at") @db.Timestamptz(6)
+  deletedAt   DateTime?        @map("deleted_at") @db.Timestamptz(6)
+
+  @@map("visible_invitations")
+}

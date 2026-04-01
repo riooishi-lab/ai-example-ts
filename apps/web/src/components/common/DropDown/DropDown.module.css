@@ -1,0 +1,46 @@
+.menu-icon {
+  margin-left: 1rem;
+}
+
+.primary {
+  position: fixed;
+  z-index: 1000;
+  width: fit-content;
+  background-color: var(--background);
+  border-top: 0.1rem solid var(--border);
+  border-right: 0.1rem solid var(--border);
+  border-left: 0.1rem solid var(--border);
+  border-radius: 0.3rem;
+  box-shadow: 0 0.5rem 2rem rgb(0 0 0 / 30%);
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+}
+
+.menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 10rem;
+  padding: 0.75rem;
+  white-space: nowrap;
+}
+
+.menu-button:not(:last-child) {
+  border-bottom: 1px solid var(--gray-lighter);
+}
+
+.left {
+  transform: translateX(-100%);
+}
+
+.right {
+  transform: translateX(0%);
+}
+
+.center {
+  transform: translateX(-50%);
+}

@@ -1,0 +1,24 @@
+.root {
+  font-size: 1rem;
+  height: 32px;
+}
+
+.control {
+  background-color: #fff;
+  border: 1px solid #5c5c5c;
+  box-shadow: none;
+
+  &:focus {
+    border: 1px solid #0070f3;
+  }
+}
+
+.error {
+  .control {
+    border: 1px solid #b42c01;
+
+    &:focus {
+      border: 1px solid #b42c01;
+    }
+  }
+}

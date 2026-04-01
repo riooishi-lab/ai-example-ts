@@ -1,0 +1,15 @@
+{
+  "name": "load_testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "k6 run --compatibility-mode=experimental_enhanced --env TARGET_URL=\"https://dev.aws.aix-sales.com/teams\" script.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/k6": "^1.4.0"
+  }
+}

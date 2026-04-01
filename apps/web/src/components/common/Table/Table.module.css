@@ -1,0 +1,72 @@
+.container {
+  /* スクロール用のラッパー */
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* Sticky header */
+.thead th {
+  position: sticky;
+  top: 0;
+  background: #f8f9fa;
+  z-index: 1;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #344054;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* テーブルボディのスタイル */
+.tbody td {
+  padding: 12px 16px;
+  color: #1f2937;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+/* セル内のコンテンツスタイル */
+.tbody-cell-content {
+  display: block;
+  text-align: left;
+  width: 100%;
+  position: relative;
+}
+
+/* 最後の行のボーダーを削除 */
+.tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* 行クリック可能時のホバー */
+.clickable-row:hover {
+  cursor: pointer;
+  background: #f8fafc;
+  transition: background-color 0.2s ease;
+}
+
+/* テキストが長いセルを省略表示 */
+.width-restricted-cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* フッタースタイル */
+.tfoot {
+  background: #f8f9fa;
+}
+
+.tfoot td {
+  padding: 12px 16px;
+  border-top: 1px solid #e0e0e0;
+}

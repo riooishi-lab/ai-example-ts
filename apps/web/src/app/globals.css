@@ -1,0 +1,166 @@
+/* apps/crm/src/app/globals.css */
+:root {
+  --_white: #ffffff;
+  --_black: #000000;
+
+  --_gray-50: #f9fafb;
+  --_gray-100: #f5f5f5;
+  --_gray-150: #efefef;
+  --_gray-200: #e5e5e5;
+  --_gray-300: #d4d4d4;
+  --_gray-400: #a3a3a3;
+  --_gray-500: #737373;
+  --_gray-600: #525252;
+  --_gray-700: #404040;
+  --_gray-800: #262626;
+  --_gray-900: #171717;
+  --_gray-950: #0a0a0a;
+
+  --_blue-50: #eff6ff;
+  --_blue-100: #b3d9f9;
+  --_blue-500: #0070f3;
+  --_blue-600: #005ecc;
+  --_blue-700: #0051af;
+
+  --_red-50: #ffded6;
+  --_red-500: #eb1d35;
+  --_red-600: #dc3545;
+  --_red-700: #c82333;
+  --_red-900: #b42c01;
+
+  --_amber-500: #f59e0b;
+
+  /* ── Semantic Surface Tokens ────────────────────────── */
+
+  --surface-page: var(--_gray-50); /* overall layout bg         */
+  --surface-default: var(--_white); /* card / panel bg           */
+  --surface-raised: var(--_white); /* modal / sheet bg          */
+  --surface-overlay: var(--_white); /* popover / tooltip bg      */
+  --surface-sunken: var(--_gray-100); /* table header / inset area */
+
+  /* ── Semantic Text Tokens ───────────────────────────
+  All ratios on --surface-default (#ffffff):
+  --text-primary    #171717  →  16.1:1  ✓
+  --text-secondary  #525252  →   7.0:1  ✓
+  --text-muted      #737373  →   4.7:1  ✓
+  --text-disabled   #a3a3a3  →   2.8:1  intentional (inactive)
+  --text-link       #0070f3  →   4.6:1  ✓             */
+
+  --text-primary: var(--_gray-900); /* main body copy            */
+  --text-secondary: var(--_gray-600); /* supporting / label text   */
+  --text-muted: var(--_gray-500); /* hints / placeholders      */
+  --text-disabled: var(--_gray-400); /* disabled state            */
+  --text-on-color: var(--_white); /* text placed on a colored surface */
+  --text-link: var(--_blue-500); /* interactive links         */
+
+  /* ── Semantic Border Tokens ─────────────────────────── */
+
+  --border-subtle: var(--_gray-150); /* hairlines / section dividers   */
+  --border-default: var(--_gray-200); /* standard component borders     */
+  --border-strong: var(--_gray-300); /* prominent / focused borders    */
+  --border-focus: var(--_blue-500); /* keyboard focus ring            */
+
+  /* ── Intent / Action Tokens ────────────────────────── */
+
+  --intent-primary: var(--_blue-500);
+  --intent-primary-hover: var(--_blue-700);
+  --intent-primary-surface: rgba(0, 112, 243, 0.08);
+  --intent-primary-light: var(--_blue-100);
+
+  --intent-danger: var(--_red-600);
+  --intent-danger-hover: var(--_red-700);
+  --intent-danger-surface: rgba(235, 29, 53, 0.06);
+  --intent-danger-light: var(--_red-50);
+  --intent-danger-border: var(--_red-600);
+
+  --intent-warning: var(--_amber-500);
+  --intent-error: var(--_red-900);
+  --intent-pending: var(--_amber-500);
+
+  /* ── Overlay / Shadow Tokens ────────────────────────── */
+
+  --overlay-scrim: rgba(0, 0, 0, 0.6);
+  --overlay-heavy: rgba(0, 0, 0, 0.9);
+  --overlay-light: rgba(0, 0, 0, 0.05);
+  --overlay-faint: rgba(0, 0, 9, 0.1);
+
+  --shadow-sm: rgb(10 31 68 / 10%);
+  --shadow-md: rgb(10 31 68 / 18%);
+  --shadow-lg: rgb(66 22 70 / 8%);
+
+  --background: var(--surface-default);
+  --foreground: var(--text-primary);
+
+  --color-white: var(--_white);
+  --color-black: var(--_black);
+  --color-gray-50: var(--_gray-50);
+  --color-gray-100: var(--_gray-100);
+  --color-gray-200: var(--_gray-150);
+  --color-gray-300: #fafafa;
+  --color-gray-400: #f3f4f6;
+  --color-gray-500: var(--_gray-200);
+  --color-gray-600: var(--_gray-300);
+  --color-gray-700: var(--_gray-500);
+  --color-gray-800: var(--_gray-600);
+  --color-gray-900: var(--_gray-800);
+  --color-gray-950: var(--_gray-900);
+
+  --color-primary: var(--intent-primary);
+  --color-primary-light: var(--intent-primary-light);
+  --color-primary-border: var(--intent-primary);
+
+  --color-danger: var(--intent-danger);
+  --color-danger-bg: var(--intent-danger-surface);
+  --color-danger-dark: var(--intent-danger-hover);
+  --color-danger-light: var(--intent-danger-light);
+  --color-danger-border: var(--intent-danger-border);
+
+  --color-warning: var(--intent-warning);
+  --color-error: var(--intent-error);
+  --color-status-pending: var(--intent-pending);
+  --color-secondary: var(--text-muted);
+
+  --color-overlay-dark: var(--overlay-scrim);
+  --color-overlay-semi: var(--overlay-heavy);
+  --color-overlay-light: var(--overlay-light);
+  --color-overlay-lightest: var(--overlay-faint);
+
+  --color-border-default: var(--border-default);
+  --color-border-dark: #5c5c5c;
+  --color-border-light: var(--intent-primary);
+
+  --color-shadow-sm: var(--shadow-sm);
+  --color-shadow-md: var(--shadow-md);
+  --color-shadow-lg: var(--shadow-lg);
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}

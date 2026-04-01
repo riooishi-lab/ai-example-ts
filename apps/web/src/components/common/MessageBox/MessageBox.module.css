@@ -1,0 +1,37 @@
+.root {
+  border-radius: 0.25rem;
+}
+
+.primary {
+  color: #0070f3;
+  background-color: #b3d9f9;
+  border: 1px solid #0070f3;
+}
+
+.success {
+  color: #2a7e2e;
+  background-color: #d5f4ed;
+  border: 1px solid #2a7e2e;
+}
+
+.error {
+  color: #dc3545;
+  background-color: #ffded6;
+  border: 1px solid #dc3545;
+}
+
+.padding-small {
+  padding: 0.5rem;
+}
+
+.padding-medium {
+  padding: 1rem;
+}
+
+.padding-large {
+  padding: 1.5rem;
+}
+
+.full-width {
+  width: 100%;
+}

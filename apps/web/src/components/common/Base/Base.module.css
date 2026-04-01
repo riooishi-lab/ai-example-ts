@@ -1,0 +1,93 @@
+.base {
+  border-radius: 0.5rem;
+}
+
+.clickable {
+  border-radius: 0.5rem;
+}
+
+.clickable:hover {
+  cursor: pointer;
+  background-color: #ffffff;
+  box-shadow:
+    rgb(10 31 68 / 18%) 0 12px 18px 0,
+    rgb(10 31 68 / 10%) 0 0 1px 0;
+}
+
+.base-max-hight div {
+  overflow: scroll;
+  -ms-overflow-style: none; /* IE, Microsoft Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.base-max-hight div::-webkit-scrollbar {
+  display: none; /* Google Chrome, Safari */
+}
+
+/* Padding classes */
+.padding--xs {
+  padding: 0.5rem;
+}
+.padding--s {
+  padding: 1rem;
+}
+.padding--m {
+  padding: 1.5rem;
+}
+.padding--l {
+  padding: 2rem;
+}
+.padding--xl {
+  padding: 2.5rem;
+}
+
+/* Theme classes */
+.theme--brand {
+  background-color: #b3d9f9;
+  border: 1px solid #0070f3;
+}
+.theme--background {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+}
+.theme--primary {
+  background-color: #b3d9f9;
+  border: 1px solid #0070f3;
+}
+.theme--disabled {
+  background-color: #f5f5f5;
+  border: 1px solid #5c5c5c;
+}
+.theme--error {
+  background-color: #ffded6;
+  border: 1px solid #dc3545;
+}
+
+/* Hoverable theme classes */
+.hoverable--brand:hover {
+  background-color: #b3d9f9;
+}
+.hoverable--background:hover {
+  background-color: #ffffff;
+}
+.hoverable--primary:hover {
+  background-color: var(--color-border-default);
+}
+.hoverable--disabled:hover {
+  background-color: #f5f5f5;
+}
+.hoverable--error:hover {
+  background-color: #ffffff;
+}
+
+.shadow {
+  box-shadow: 0 4px 24px rgb(66 22 70 / 8%);
+}
+
+.fullwidth {
+  width: 100%;
+}
+
+.no-outline {
+  border: none;
+}
