@@ -1,8 +1,9 @@
 import admin from 'firebase-admin'
+import type { Auth } from 'firebase-admin/auth'
 import { getAuth } from 'firebase-admin/auth'
 import { serverEnv } from '../../env/server'
 
-function getAdminApp() {
+function initializeAdminApp() {
   if (!admin.apps.length) {
     admin.initializeApp({
       credential: admin.credential.cert({
@@ -12,12 +13,23 @@ function getAdminApp() {
       }),
     })
   }
-  return admin
 }
 
-export const adminAuth = new Proxy({} as ReturnType<typeof getAuth>, {
+let _adminAuth: Auth | undefined
+
+function getAdminAuth(): Auth {
+  if (!_adminAuth) {
+    initializeAdminApp()
+    _adminAuth = getAuth()
+  }
+  return _adminAuth
+}
+
+export const adminAuth = new Proxy({} as Auth, {
   get(_, prop) {
-    return Reflect.get(getAuth(getAdminApp()), prop)
+    const auth = getAdminAuth()
+    const value = Reflect.get(auth, prop)
+    return typeof value === 'function' ? value.bind(auth) : value
   },
 })
 export default admin
