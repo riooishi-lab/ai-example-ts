@@ -1,25 +1,22 @@
+import type { VisibleUser } from '@monorepo/database'
 import { UserRole } from '@monorepo/database'
-import { useMemo } from 'react'
 import styles from '../page.module.css'
-import type { UserWithTeam } from '../types'
 
 type UserStatsGridProps = {
-  users: UserWithTeam[]
+  users: VisibleUser[]
 }
 
 export function UserStatsGrid({ users }: UserStatsGridProps) {
-  const { activeCount, adminManagerCount, salesRepCount } = useMemo(() => {
-    const adminManagerRoles: Set<UserRole> = new Set([UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.MANAGER])
-    return users.reduce(
-      (acc, user) => {
-        if (user.isActive) acc.activeCount += 1
-        if (adminManagerRoles.has(user.role)) acc.adminManagerCount += 1
-        if (user.role === UserRole.SALES_REP) acc.salesRepCount += 1
-        return acc
-      },
-      { activeCount: 0, adminManagerCount: 0, salesRepCount: 0 },
-    )
-  }, [users])
+  const adminRoles: Set<UserRole> = new Set([UserRole.SYSTEM_ADMIN, UserRole.MANAGER])
+  const { activeCount, adminCount, maintenanceCount, fieldWorkerCount } = users.reduce(
+    (acc, user) => ({
+      activeCount: acc.activeCount + (user.isActive ? 1 : 0),
+      adminCount: acc.adminCount + (adminRoles.has(user.role) ? 1 : 0),
+      maintenanceCount: acc.maintenanceCount + (user.role === UserRole.MAINTENANCE ? 1 : 0),
+      fieldWorkerCount: acc.fieldWorkerCount + (user.role === UserRole.FIELD_WORKER ? 1 : 0),
+    }),
+    { activeCount: 0, adminCount: 0, maintenanceCount: 0, fieldWorkerCount: 0 },
+  )
 
   return (
     <div className={styles.statsGrid}>
@@ -28,12 +25,16 @@ export function UserStatsGrid({ users }: UserStatsGridProps) {
         <div className={styles.statValue}>{activeCount}</div>
       </div>
       <div className={styles.statCard}>
-        <div className={styles.statLabel}>管理者/マネージャー</div>
-        <div className={styles.statValue}>{adminManagerCount}</div>
+        <div className={styles.statLabel}>管理者</div>
+        <div className={styles.statValue}>{adminCount}</div>
       </div>
       <div className={styles.statCard}>
-        <div className={styles.statLabel}>営業担当</div>
-        <div className={styles.statValue}>{salesRepCount}</div>
+        <div className={styles.statLabel}>保全担当</div>
+        <div className={styles.statValue}>{maintenanceCount}</div>
+      </div>
+      <div className={styles.statCard}>
+        <div className={styles.statLabel}>現場作業員</div>
+        <div className={styles.statValue}>{fieldWorkerCount}</div>
       </div>
     </div>
   )

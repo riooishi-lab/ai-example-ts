@@ -3,19 +3,30 @@
 // NOTE: This exports from browser.ts (no Node.js runtime deps).
 // For the prisma instance, import from 'database/client' instead.
 
-export {
-  Prisma,
-  $Enums,
-  UserRole,
-  InvitationStatus,
-} from './generated/client/browser'
 export type {
-  User,
-  Invitation,
-  Team,
-  TeamMember,
-  VisibleUser,
-  VisibleTeam,
-  VisibleTeamMember,
-  VisibleInvitation,
-} from './generated/client/browser'
+	AiReport,
+	Equipment,
+	FailureReport,
+	InspectionItem,
+	InspectionRecord,
+	InspectionValue,
+	Invitation,
+	Part,
+	Photo,
+	User,
+	VisibleEquipment,
+	VisibleFailureReport,
+	VisibleInspectionItem,
+	VisibleInspectionRecord,
+	VisibleInvitation,
+	VisiblePart,
+	VisibleUser,
+} from "./generated/client/browser";
+export {
+	$Enums,
+	InspectionInputType,
+	InspectionStatus,
+	InvitationStatus,
+	Prisma,
+	UserRole,
+} from "./generated/client/browser";

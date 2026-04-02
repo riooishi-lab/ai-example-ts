@@ -1,4 +1,4 @@
-import type { User } from '@monorepo/database'
+import type { VisibleUser } from '@monorepo/database'
 import { prisma } from '@monorepo/database/client'
 import { jwtDecode } from 'jwt-decode'
 import { cookies } from 'next/headers'
@@ -62,21 +62,21 @@ export async function revokeUserSessions(uid: string) {
   await adminAuth.revokeRefreshTokens(uid)
 }
 
-export async function getCurrentUser(): Promise<User | null> {
+export async function getCurrentUser(): Promise<VisibleUser | null> {
   const session = await getSession()
   if (!session) {
     return null
   }
 
-  return await prisma.user.findUnique({
+  return await prisma.visibleUser.findUnique({
     where: { authProviderId: session.uid },
   })
 }
 
-export async function checkIsAdminOrSuperAdmin(): Promise<User | null> {
+export async function checkIsAdminOrManager(): Promise<VisibleUser | null> {
   const user = await getCurrentUser()
 
-  if (!user || !['SUPER_ADMIN', 'ADMIN'].includes(user.role)) {
+  if (!user || !['SYSTEM_ADMIN', 'MANAGER'].includes(user.role)) {
     return null
   }
 

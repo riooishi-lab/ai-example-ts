@@ -6,6 +6,7 @@ import { secureHeaders } from 'hono/secure-headers'
 import { handle } from 'hono/vercel'
 import { ZodError } from 'zod'
 import type { AppEnv } from '../middleware'
+import { csvExport } from '../routers/export'
 import { sample } from '../routers/sample'
 
 export const runtime = 'nodejs'
@@ -30,6 +31,7 @@ app.notFound((c) => {
   return c.json({ error: 'Not Found' }, 404)
 })
 
+app.route('/export', csvExport)
 const routes = app.route('/sample', sample)
 
 export type AppType = typeof routes
