@@ -69,34 +69,3 @@ export async function cleanupTestInvitation(token: string) {
     pool.query('UPDATE invitations SET deleted_at = NOW() WHERE token = $1 AND deleted_at IS NULL', [token]),
   )
 }
-
-export async function createTestTeam(name: string): Promise<number> {
-  return runQuery(async (pool) => {
-    const result = await pool.query(
-      `INSERT INTO teams (public_id, name, created_at, updated_at)
-       VALUES ($1, $2, NOW(), NOW())
-       RETURNING id`,
-      [randomUUID(), name],
-    )
-    return result.rows[0].id
-  })
-}
-
-export async function createTestTeamMember(teamId: number, userId: number): Promise<number> {
-  return runQuery(async (pool) => {
-    const result = await pool.query(
-      `INSERT INTO team_members (team_id, user_id, created_at, updated_at)
-       VALUES ($1, $2, NOW(), NOW())
-       RETURNING id`,
-      [teamId, userId],
-    )
-    return result.rows[0].id
-  })
-}
-
-export async function cleanupTestTeam(teamId: number) {
-  return runQuery(async (pool) => {
-    await pool.query('UPDATE team_members SET deleted_at = NOW() WHERE team_id = $1 AND deleted_at IS NULL', [teamId])
-    await pool.query('UPDATE teams SET deleted_at = NOW() WHERE id = $1 AND deleted_at IS NULL', [teamId])
-  })
-}

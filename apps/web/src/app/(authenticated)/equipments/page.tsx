@@ -11,7 +11,7 @@ export default async function Page() {
   })
 
   return (
-    <FlexBox flexDirection='column' gap='1.5rem' className={styles.container}>
+    <FlexBox flexDirection='column' gap='1.5rem' className={styles.container} data-testid='equipments-page'>
       <PageHeader icon={<MdBuild size={32} />} title='設備一覧' subtitle={`全 ${equipments.length} 件`} />
       <EquipmentList equipments={equipments} />
     </FlexBox>

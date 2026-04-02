@@ -26,18 +26,22 @@ export default async function Page() {
   } = await fetchDashboardData()
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid='dashboard-container'>
       <FlexBox flexDirection='column' gap='1.5rem'>
         <PageHeader icon={<FiHome size={32} />} title='ダッシュボード' subtitle='設備保全の概況' />
 
-        <div className={styles.statsGrid}>
+        <div className={styles.statsGrid} data-testid='dashboard-stats-grid'>
           <div className={styles.statCard}>
             <span className={styles.statLabel}>設備数</span>
-            <span className={styles.statValue}>{equipmentCount}</span>
+            <span className={styles.statValue} data-testid='dashboard-equipment-count'>
+              {equipmentCount}
+            </span>
           </div>
           <div className={styles.statCard}>
             <span className={styles.statLabel}>本日の点検完了数</span>
-            <span className={styles.statValue}>{todayInspectionCount}</span>
+            <span className={styles.statValue} data-testid='dashboard-inspection-count'>
+              {todayInspectionCount}
+            </span>
           </div>
           <div className={styles.statCard}>
             <span className={styles.statLabel}>不具合報告数</span>

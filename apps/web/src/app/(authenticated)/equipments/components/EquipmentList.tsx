@@ -58,7 +58,7 @@ export function EquipmentList({ equipments }: Props) {
   }
 
   return (
-    <FlexBox flexDirection='column' gap='1.5rem'>
+    <FlexBox flexDirection='column' gap='1.5rem' data-testid='equipment-list-container'>
       <EquipmentSearchFilter search={search} onSearchChange={setSearch} />
 
       <Table
