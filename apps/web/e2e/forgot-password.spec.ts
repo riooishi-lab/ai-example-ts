@@ -23,6 +23,7 @@ test.describe('パスワード再設定送信', () => {
   })
 
   test('無効なメールアドレスでエラーが表示される', async ({ page }) => {
+    test.skip(!e2eEnv.FIREBASE_API_KEY, 'NEXT_PUBLIC_FIREBASE_API_KEY が設定されていないためスキップ')
     await page.locator('form').evaluate((form) => form.setAttribute('novalidate', ''))
 
     const emailInput = page.getByTestId('forgot-password-email-input')
@@ -35,6 +36,7 @@ test.describe('パスワード再設定送信', () => {
   })
 
   test('存在しないユーザーのメールアドレスでエラーが表示される', async ({ page }) => {
+    test.skip(!e2eEnv.FIREBASE_API_KEY, 'NEXT_PUBLIC_FIREBASE_API_KEY が設定されていないためスキップ')
     const emailInput = page.getByTestId('forgot-password-email-input')
     await emailInput.fill('nonexistent-user@example.com')
     await page.getByTestId('forgot-password-submit-button').click()
@@ -87,6 +89,7 @@ test.describe('パスワード再設定', () => {
   })
 
   test('無効なoobCodeでパスワード再設定するとエラーが表示される', async ({ page }) => {
+    test.skip(!e2eEnv.FIREBASE_API_KEY, 'NEXT_PUBLIC_FIREBASE_API_KEY が設定されていないためスキップ')
     await page.goto('/auth/forgot-password/reset?oobCode=invalid-code')
 
     const passwordInput = page.getByTestId('password-reset-password-input')
