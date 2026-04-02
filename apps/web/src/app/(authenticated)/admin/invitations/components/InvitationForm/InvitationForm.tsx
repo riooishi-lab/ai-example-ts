@@ -42,7 +42,7 @@ export function InvitationForm({ invitation, action, onSuccess, onClose }: Invit
       lastName: invitation?.lastName ?? '',
       firstName: invitation?.firstName ?? '',
       displayName: invitation?.displayName ?? '',
-      role: invitation?.role ?? UserRole.SALES_REP,
+      role: invitation?.role ?? UserRole.FIELD_WORKER,
     },
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: InvitationFormSchema, errorMap: zodFormErrorMap })

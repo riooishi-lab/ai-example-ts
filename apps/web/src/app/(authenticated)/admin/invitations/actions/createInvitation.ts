@@ -7,13 +7,13 @@ import { revalidatePath } from 'next/cache'
 import { composeInvitationEmail, SENDER } from '../../../../../constants/email'
 import { PAGE_PATH } from '../../../../../constants/pagePath'
 import { serverEnv } from '../../../../../env/server'
-import { checkIsAdminOrSuperAdmin } from '../../../../../libs/auth/session'
+import { checkIsAdminOrManager } from '../../../../../libs/auth/session'
 import { sendEmail } from '../../../../../libs/email'
 import { InvitationFormSchema } from '../components/InvitationForm/InvitationForm.types'
 import { INVITATION_EXPIRES_DAYS } from '../constants'
 
 export async function createInvitation(_: unknown, formData: FormData) {
-  const adminOrSuperAdmin = await checkIsAdminOrSuperAdmin()
+  const adminOrSuperAdmin = await checkIsAdminOrManager()
   if (!adminOrSuperAdmin) {
     return {
       status: 'error' as const,

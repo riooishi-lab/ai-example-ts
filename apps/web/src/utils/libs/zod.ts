@@ -1,4 +1,4 @@
-import type { Primitive, StringValidation, ZodErrorMap, ZodLiteral, ZodNever, ZodParsedType, ZodSchema } from 'zod'
+import type { Primitive, ZodErrorMap, ZodLiteral, ZodNever, ZodParsedType, ZodSchema } from 'zod'
 import { ZodIssueCode, z } from 'zod'
 
 type MappedZodLiterals<T extends readonly Primitive[]> = {
@@ -95,40 +95,55 @@ export const getParsed = <O, Schema extends ZodSchema<O>>(
   return
 }
 
+const invalidTypeMessages: Partial<Record<ZodParsedType, string>> = {
+  number: '半角数字で入力してください。',
+  integer: '整数で入力してください。',
+  float: '小数で入力してください。',
+  string: '文字列を入力してください。',
+  boolean: '真偽値を入力してください。',
+  date: '日付を入力してください。',
+}
+
+const invalidStringMessages: Partial<Record<string, string>> = {
+  url: '対応していないURLの形式を含んでいます。',
+  email: '対応していないメールアドレスの形式を含んでいます。',
+}
+
+function handleTooBig(issue: z.ZodTooBigIssue): string | undefined {
+  const max = issue.maximum.toString()
+  if (issue.type === 'string' || issue.type === 'number') return `${max}以下である必要があります。`
+  if (issue.type === 'array') return `${max}個以下である必要があります。`
+  return undefined
+}
+
+function handleTooSmall(issue: z.ZodTooSmallIssue): string | undefined {
+  const min = issue.minimum.toString()
+  if (issue.type === 'string') return min === '1' ? '必須項目です。' : '入力形式が正しくありません。'
+  if (issue.type === 'array') return `${min}個以上である必要があります。`
+  if (issue.type === 'number') return `${min}以上である必要があります。`
+  return undefined
+}
+
 export const zodFormErrorMap: ZodErrorMap = (issue, ctx) => {
   const defaultError = { message: ctx.defaultError }
-  if (issue.code === ZodIssueCode.invalid_type) {
-    if (issue.expected === ('number' satisfies ZodParsedType)) return { message: '半角数字で入力してください。' }
-    if (issue.expected === ('integer' satisfies ZodParsedType)) return { message: '整数で入力してください。' }
-    if (issue.expected === ('float' satisfies ZodParsedType)) return { message: '小数で入力してください。' }
-    if (issue.expected === ('string' satisfies ZodParsedType)) return { message: '文字列を入力してください。' }
-    if (issue.expected === ('boolean' satisfies ZodParsedType)) return { message: '真偽値を入力してください。' }
-    if (issue.expected === ('date' satisfies ZodParsedType)) return { message: '日付を入力してください。' }
-    return defaultError
-  }
-  if (issue.code === ZodIssueCode.invalid_string) {
-    if (issue.validation === ('url' satisfies StringValidation))
-      return { message: '対応していないURLの形式を含んでいます。' }
-    if (issue.validation === ('email' satisfies StringValidation))
-      return { message: '対応していないメールアドレスの形式を含んでいます。' }
-    return defaultError
-  }
-  if (issue.code === ZodIssueCode.too_big) {
-    const max = issue.maximum.toString()
-    if (issue.type === 'string') return { message: `${max}以下である必要があります。` }
-    if (issue.type === 'array') return { message: `${max}個以下である必要があります。` }
-    if (issue.type === 'number') return { message: `${max}以下である必要があります。` }
-    return defaultError
-  }
-  if (issue.code === ZodIssueCode.too_small) {
-    const min = issue.minimum.toString()
-    if (issue.type === 'string') {
-      if (min === '1') return { message: '必須項目です。' }
-      return { message: '入力形式が正しくありません。' }
+  switch (issue.code) {
+    case ZodIssueCode.invalid_type: {
+      const msg = invalidTypeMessages[issue.expected]
+      return msg ? { message: msg } : defaultError
     }
-    if (issue.type === 'array') return { message: `${min}個以上である必要があります。` }
-    if (issue.type === 'number') return { message: `${min}以上である必要があります。` }
-    return defaultError
+    case ZodIssueCode.invalid_string: {
+      const msg = invalidStringMessages[issue.validation as string]
+      return msg ? { message: msg } : defaultError
+    }
+    case ZodIssueCode.too_big: {
+      const msg = handleTooBig(issue)
+      return msg ? { message: msg } : defaultError
+    }
+    case ZodIssueCode.too_small: {
+      const msg = handleTooSmall(issue)
+      return msg ? { message: msg } : defaultError
+    }
+    default:
+      return defaultError
   }
-  return defaultError
 }

@@ -5,7 +5,7 @@ import { prisma } from '@monorepo/database/client'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { PAGE_PATH } from '../../../../../constants/pagePath'
-import { checkIsAdminOrSuperAdmin } from '../../../../../libs/auth/session'
+import { checkIsAdminOrManager } from '../../../../../libs/auth/session'
 
 const DeleteInvitationSchema = z.object({
   id: z.number(),
@@ -22,7 +22,7 @@ export async function deleteInvitation(
   _: DeleteInvitationState | null,
   formData: FormData,
 ): Promise<DeleteInvitationState> {
-  const adminOrSuperAdmin = await checkIsAdminOrSuperAdmin()
+  const adminOrSuperAdmin = await checkIsAdminOrManager()
   if (!adminOrSuperAdmin) {
     return { status: 'error' as const, error: { message: ['この操作を実行する権限がありません'] } }
   }
@@ -44,27 +44,26 @@ export async function deleteInvitation(
 
   const { id } = parsed.data
 
+  const invitation = await prisma.visibleInvitation.findUnique({
+    where: { id },
+  })
+
+  if (!invitation) {
+    return { status: 'error' as const, error: { message: ['招待が見つかりません'] } }
+  }
+
+  if (invitation.status === InvitationStatus.ACCEPTED) {
+    return { status: 'error' as const, error: { message: ['承認済みの招待は削除できません'] } }
+  }
+
   try {
-    const invitation = await prisma.visibleInvitation.findUnique({
-      where: { id },
-    })
-
-    if (!invitation) {
-      return { status: 'error' as const, error: { message: ['招待が見つかりません'] } }
-    }
-
-    if (invitation.status === InvitationStatus.ACCEPTED) {
-      return { status: 'error' as const, error: { message: ['承認済みの招待は削除できません'] } }
-    }
-
     await prisma.invitation.update({
       where: { id },
       data: {
         deletedAt: new Date(),
       },
     })
-  } catch (error) {
-    console.error('Delete invitation error:', error)
+  } catch {
     return { status: 'error' as const, error: { message: ['招待の削除に失敗しました'] } }
   }
 

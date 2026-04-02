@@ -5,14 +5,14 @@ import { UserRole } from '@monorepo/database'
 import { prisma } from '@monorepo/database/client'
 import { revalidatePath } from 'next/cache'
 import { PAGE_PATH } from '../../../../../constants/pagePath'
-import { checkIsAdminOrSuperAdmin } from '../../../../../libs/auth/session'
+import { checkIsAdminOrManager } from '../../../../../libs/auth/session'
 import { UserFormSchema } from '../components/UserForm/UserForm.types'
 
 const errorResult = (message: string) => ({ status: 'error' as const, error: { message: [message] } })
 const successResult = () => ({ status: 'success' as const })
 
 export const updateUser = async (_: unknown, formData: FormData) => {
-  const currentUser = await checkIsAdminOrSuperAdmin()
+  const currentUser = await checkIsAdminOrManager()
   if (!currentUser) {
     return errorResult('この操作を実行する権限がありません')
   }
@@ -25,18 +25,16 @@ export const updateUser = async (_: unknown, formData: FormData) => {
 
   const { id, firstName, lastName, displayName, role, isActive } = submission.value
 
-  // Prevent regular ADMINs from editing SUPER_ADMIN users
-  const targetUser = await prisma.user.findUnique({ where: { id: Number(id) } })
+  const targetUser = await prisma.visibleUser.findUnique({ where: { id: Number(id) } })
   if (!targetUser) {
     return errorResult('ユーザーが見つかりません')
   }
-  if (targetUser.role === UserRole.SUPER_ADMIN && currentUser.role !== UserRole.SUPER_ADMIN) {
-    return errorResult('スーパー管理者を編集する権限がありません')
+  if (targetUser.role === UserRole.SYSTEM_ADMIN && currentUser.role !== UserRole.SYSTEM_ADMIN) {
+    return errorResult('システム管理者を編集する権限がありません')
   }
 
-  // Prevent ADMINs from promoting other users to SUPER_ADMIN
-  if (role === UserRole.SUPER_ADMIN && currentUser.role !== UserRole.SUPER_ADMIN) {
-    return errorResult('ユーザーをスーパー管理者に設定する権限がありません')
+  if (role === UserRole.SYSTEM_ADMIN && currentUser.role !== UserRole.SYSTEM_ADMIN) {
+    return errorResult('ユーザーをシステム管理者に設定する権限がありません')
   }
 
   try {
@@ -50,8 +48,7 @@ export const updateUser = async (_: unknown, formData: FormData) => {
         isActive,
       },
     })
-  } catch (error) {
-    console.error('Update user error:', error)
+  } catch {
     return errorResult('ユーザーの更新に失敗しました')
   }
 

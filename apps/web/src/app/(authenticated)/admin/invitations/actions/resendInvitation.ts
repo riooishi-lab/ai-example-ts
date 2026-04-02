@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache'
 import { composeInvitationEmail, SENDER } from '../../../../../constants/email'
 import { PAGE_PATH } from '../../../../../constants/pagePath'
 import { serverEnv } from '../../../../../env/server'
-import { checkIsAdminOrSuperAdmin, getSession } from '../../../../../libs/auth/session'
+import { checkIsAdminOrManager, getSession } from '../../../../../libs/auth/session'
 import { sendEmail } from '../../../../../libs/email'
 import { INVITATION_EXPIRES_DAYS } from '../constants'
 
@@ -16,7 +16,7 @@ export async function resendInvitation(invitationId: number) {
     return { status: 'error' as const, error: { message: ['ログインしてください'] } }
   }
 
-  const adminOrSuperAdmin = await checkIsAdminOrSuperAdmin()
+  const adminOrSuperAdmin = await checkIsAdminOrManager()
   if (!adminOrSuperAdmin) {
     return { status: 'error' as const, error: { message: ['この操作を実行する権限がありません'] } }
   }

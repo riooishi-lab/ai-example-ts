@@ -1,0 +1,85 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 640px;
+}
+
+.itemList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.itemCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid var(--color-border, #e0e0e0);
+  border-radius: 8px;
+  background: var(--color-surface, #fff);
+}
+
+.itemHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.limitInfo {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--color-secondary, #666);
+}
+
+.numericInputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.unitLabel {
+  font-size: 0.875rem;
+  color: var(--color-secondary, #666);
+  white-space: nowrap;
+}
+
+.warningInput {
+  border-color: #f59e0b;
+}
+
+.dangerInput {
+  border-color: #ef4444;
+}
+
+.warningText {
+  color: #f59e0b;
+  font-size: 0.75rem;
+}
+
+.dangerText {
+  color: #ef4444;
+  font-size: 0.75rem;
+}
+
+.statusMessage {
+  font-size: 0.875rem;
+}
+
+.errorMessage {
+  color: #ef4444;
+  font-size: 0.875rem;
+}
+
+.successMessage {
+  color: #22c55e;
+  font-size: 0.875rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+}

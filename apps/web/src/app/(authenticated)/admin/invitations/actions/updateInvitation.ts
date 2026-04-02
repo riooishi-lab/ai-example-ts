@@ -5,11 +5,11 @@ import { InvitationStatus } from '@monorepo/database'
 import { prisma } from '@monorepo/database/client'
 import { revalidatePath } from 'next/cache'
 import { PAGE_PATH } from '../../../../../constants/pagePath'
-import { checkIsAdminOrSuperAdmin } from '../../../../../libs/auth/session'
+import { checkIsAdminOrManager } from '../../../../../libs/auth/session'
 import { InvitationFormSchema } from '../components/InvitationForm/InvitationForm.types'
 
 export async function updateInvitation(_: unknown, formData: FormData) {
-  const adminOrSuperAdmin = await checkIsAdminOrSuperAdmin()
+  const adminOrSuperAdmin = await checkIsAdminOrManager()
   if (!adminOrSuperAdmin) {
     return {
       status: 'error' as const,
@@ -25,25 +25,25 @@ export async function updateInvitation(_: unknown, formData: FormData) {
 
   const { id, firstName, lastName, role } = submission.value
 
+  const invitation = await prisma.visibleInvitation.findFirst({
+    where: { id },
+  })
+
+  if (!invitation) {
+    return {
+      status: 'error' as const,
+      error: { message: ['招待が見つかりません'] },
+    }
+  }
+
+  if (invitation.status === InvitationStatus.ACCEPTED) {
+    return {
+      status: 'error' as const,
+      error: { message: ['承認済みの招待は編集できません'] },
+    }
+  }
+
   try {
-    const invitation = await prisma.visibleInvitation.findFirst({
-      where: { id },
-    })
-
-    if (!invitation) {
-      return {
-        status: 'error' as const,
-        error: { message: ['招待が見つかりません'] },
-      }
-    }
-
-    if (invitation.status === InvitationStatus.ACCEPTED) {
-      return {
-        status: 'error' as const,
-        error: { message: ['承認済みの招待は編集できません'] },
-      }
-    }
-
     await prisma.invitation.update({
       where: { id },
       data: {
@@ -52,8 +52,7 @@ export async function updateInvitation(_: unknown, formData: FormData) {
         role,
       },
     })
-  } catch (error) {
-    console.error('Update invitation error:', error)
+  } catch {
     return {
       status: 'error' as const,
       error: { message: ['招待の更新に失敗しました'] },
