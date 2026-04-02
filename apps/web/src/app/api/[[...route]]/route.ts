@@ -10,6 +10,7 @@ import { csvExport } from '../routers/export'
 import { sample } from '../routers/sample'
 
 export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 const app = new Hono<AppEnv>().basePath('/api')
 
