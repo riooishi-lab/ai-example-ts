@@ -53,7 +53,7 @@ export async function resendInvitation(invitationId: number) {
     await sendEmail({
       to: invitation.email,
       from: SENDER,
-      subject: '【マイアプリ】招待されました',
+      subject: '【NSK System】招待されました',
       html: composeInvitationEmail({ signUpPageUrl, signInPageUrl }),
     })
   } catch {

@@ -71,7 +71,7 @@ export async function sendPasswordResetEmail(
     await sendEmail({
       to: email,
       from: SENDER,
-      subject: '【マイアプリ】パスワードリセットのご案内',
+      subject: '【NSK System】パスワードリセットのご案内',
       html: composePasswordResetEmail({ passwordResetUrl: resetUrl }),
     })
   } catch {

@@ -21,7 +21,7 @@ export const composeInvitationEmail = ({
   signInPageUrl: URL
 }) => `
       <div style="font-family: Arial, sans-serif; line-height: 1.6;">
-      <p>マイアプリへの招待を受け取りました。</p>
+      <p>NSK Systemへの招待を受け取りました。</p>
       <p>
           以下のURLよりアカウントのご登録をお願いいたします。<br />
           <a href="${signUpPageUrl.toString()}">新規登録ページ</a>

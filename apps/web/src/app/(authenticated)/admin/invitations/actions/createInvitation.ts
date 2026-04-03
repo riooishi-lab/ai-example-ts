@@ -78,7 +78,7 @@ export async function createInvitation(_: unknown, formData: FormData) {
     await sendEmail({
       to: email,
       from: SENDER,
-      subject: '【マイアプリ】招待されました',
+      subject: '【NSK System】招待されました',
       html: composeInvitationEmail({ signUpPageUrl, signInPageUrl }),
     })
   } catch {
